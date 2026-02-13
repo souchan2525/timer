@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head onload="timer()">
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        height: 100vh;
+        font-size: 5rem;
+        background-color: #f7f4be;
+        text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        border-radius: 5px;
+        border-color: #f7f4be;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="time"></div>
+    <script>
+      function timer() {
+        const param = new URLSearchParams(location.search)
+        const sec = Number(param.get("sec"))
+        if (!sec || sec <= 0) {
+          document.getElementById("time").textContent = "--";
+        } else {
+          let remaining = sec;
+          const timeEl = document.getElementById("time");
+          timeEl.textContent = remaining;
+          const timer = setInterval(() => {
+            remaining--;
+            timeEl.textContent = remaining;
+            if (remaining <= 0) {
+              clearInterval(timer);
+              timeEl.textContent = "0";
+            }
+          }, 1000);
+        }
+      }
+    </script>
+  </body>
+</html>
