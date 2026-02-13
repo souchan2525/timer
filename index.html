@@ -1,43 +1,50 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head onload="timer()">
-    <style>
-      body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        height: 100vh;
-        font-size: 5rem;
-        background-color: #f7f4be;
-        text-shadow: 0 0 10px rgba(0,0,0,0.5);
-        border-radius: 5px;
-        border-color: #f7f4be;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="time"></div>
-    <script>
-      function timer() {
-        const param = new URLSearchParams(location.search)
-        const sec = Number(param.get("sec"))
-        if (!sec || sec <= 0) {
-          document.getElementById("time").textContent = "--";
-        } else {
-          let remaining = sec;
-          const timeEl = document.getElementById("time");
-          timeEl.textContent = remaining;
-          const timer = setInterval(() => {
-            remaining--;
-            timeEl.textContent = remaining;
-            if (remaining <= 0) {
-              clearInterval(timer);
-              timeEl.textContent = "0";
-            }
-          }, 1000);
+<head>
+  <meta charset="UTF-8">
+  <title>Timer</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #111;
+      color: #fff;
+      font-size: 5rem;
+      font-family: system-ui, sans-serif;
+    }
+
+    #time {
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    }
+  </style>
+</head>
+<body>
+  <div id="time">--</div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const sec = Number(params.get("sec"));
+
+    if (!sec || sec <= 0) {
+      document.getElementById("time").textContent = "--";
+    } else {
+      let remaining = sec;
+      const timeEl = document.getElementById("time");
+      timeEl.textContent = remaining;
+
+      const timer = setInterval(() => {
+        remaining--;
+        timeEl.textContent = remaining;
+
+        if (remaining <= 0) {
+          clearInterval(timer);
+          timeEl.textContent = "0";
         }
-      }
-    </script>
-  </body>
+      }, 1000);
+    }
+  </script>
+</body>
 </html>
