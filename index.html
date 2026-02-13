@@ -16,14 +16,19 @@
       font-family: system-ui, sans-serif;
     }
 
+    .timer {
+      border-radius: 4px;
+      background-color: #f1fcca;
+      border-color: #f1fcca;
+    }
+    
     #time {
       text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
     }
   </style>
 </head>
 <body>
-  <div id="time">--</div>
-
+  <div id="time" class="timer">--</div>
   <script>
     const params = new URLSearchParams(location.search);
     const sec = Number(params.get("sec"));
