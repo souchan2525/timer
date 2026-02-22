@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dotenv@16.4.5/dist/dotenv.min.js"></script>
+    <script>
+      // Supabaseクライアントの初期化
+      const supabaseUrl = process.env.baseurl; // 置き換えてください
+      const supabaseKey = process.env.basekey; // 置き換えてください
+      const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    </script>
+  </head>
+  <body>
+    <main class="container" style="display: flex; flex-direction: column; justify-content: center; min-height: 80vh;">
+      <article>
+        <header>
+          <strong>🔐 パスワードが必要です</strong>
+        </header>
+        <p>「<span id="server-name">読み込み中...</span>」へ入室するには合言葉を入力してください。</p>
+        
+        <form id="login-form">
+          <input type="password" id="pass" placeholder="パスワードを入力" required>
+          <button type="submit">サーバーへ入る</button>
+        </form>
+        
+        <footer id="msg" style="color: var(--pico-error-color);"></footer>
+      </article>
+    </main>
+
+    <script>
+      // URLの最後（souchan-server）を取得
+      const slug = window.location.pathname.split('/').pop();
+      document.getElementById('server-name').innerText = slug;
+
+      document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const pass = document.getElementById('pass').value;
+
+        // Supabaseで照合（Botが保存したデータを探す）
+        const { data, error } = await supabase
+          .from('custom_invites')
+          .select('invite_url')
+          .eq('slug', slug)
+          .eq('password', pass)
+          .single();
+
+        if (data) {
+          window.location.href = data.invite_url; // 招待リンクへリダイレクト
+        } else {
+          document.getElementById('msg').innerText = "❌ パスワードが正しくありません。";
+        }
+      });
+    </script>
+  </body>
+</html>
