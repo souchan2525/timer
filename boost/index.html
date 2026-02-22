@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- 正しいURLのPico.css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  </head>
+  <body>
+    <main class="container">
+      <!-- 1. ヘッダー（タイトルとメニュー） -->
+      <nav>
+        <ul>
+          <li><strong>そうちゃんbot</strong></li>
+        </ul>
+        <ul>
+          <li><a href="https://souchan-bot.pages.dev/">ホーム</a></li>
+          <li><a href="https://souchan-bot.pages.dev/command">コマンド</a></li>
+          <li><a href="https://souchan-bot.pages.dev/boost">ブースト</a></li>
+          <li><a href="https://discord.com/oauth2/authorize?client_id=1458685374304878778&permissions=268504064&integration_type=0&scope=bot+applications.commands" role="button">導入する</a></li>
+        </ul>
+      </nav>
+
+      <section id="boost">
+        <h3>💎 ブースト特典</h3>
+        
+        <div style="margin-bottom: 2rem;">
+          <input type="range" min="0" max="14" value="0" id="boost-slider">
+          <div style="display: flex; justify-content: space-between; padding: 0 5px; font-size: 0.8rem; opacity: 0.7;">
+            <span>0</span>
+            <span>14</span>
+          </div>
+          <p>ブースト数: <strong id="current-val">0</strong></p>
+        </div>
+
+        <div class="grid">
+          <article id="card-5">
+            <header><strong id="title-5">5ブーストの特典</strong></header>
+            通常では使えない絵文字の疑似使用コマンドの解放！
+          </article>
+          <article id="card-14">
+            <header><strong id="title-14">14ブーストの特典</strong></header>
+            埋め込み作成コマンドの解放！
+          </article>
+        </div>
+      </section>
+
+      <script>
+        const slider = document.getElementById('boost-slider');
+        const valDisplay = document.getElementById('current-val');
+        const card5 = document.getElementById('card-5');
+        const card14 = document.getElementById('card-14');
+
+        slider.addEventListener('input', (e) => {
+          const val = parseInt(e.target.value);
+          valDisplay.innerText = val;
+
+          // 5ブースト以上の時のスタイル
+          if (val >= 5) {
+            card5.style.borderColor = "var(--pico-primary)";
+            card5.style.boxShadow = "0 0 10px var(--pico-primary-underline)";
+            document.getElementById('title-5').innerText = "✅ 5ブーストの特典（解放！）";
+          } else {
+            card5.style.borderColor = "";
+            card5.style.boxShadow = "";
+            document.getElementById('title-5').innerText = "5ブーストの特典";
+          }
+
+          // 14ブースト（最大）の時のスタイル
+          if (val >= 14) {
+            card14.style.borderColor = "var(--pico-primary)";
+            card14.style.boxShadow = "0 0 10px var(--pico-primary-underline)";
+            document.getElementById('title-14').innerText = "✅ 14ブーストの特典（解放！）";
+          } else {
+            card14.style.borderColor = "";
+            card14.style.boxShadow = "";
+            document.getElementById('title-14').innerText = "14ブーストの特典";
+          }
+        });
+      </script>
+
+      <footer class="container">
+        <hr>
+        <p><small>© 2026 そうちゃんbot | Created by Souchan</small></p>
+      </footer>
+    </main>
+  </body>
+</html>
